@@ -3,17 +3,19 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, String, Integer, create_engine, Boolean, DateTime, ForeignKey, func, PrimaryKeyConstraint, ForeignKeyConstraint
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
+from dotenv import load_dotenv
 import json 
 
 db = SQLAlchemy()
 
 database_url = os.environ.get('DATABASE_URL', None)
 database_name = os.environ.get('DATABASE_NAME')
+postgres_user = os.environ.get('POSTGRESQL_USER')
 
 if database_url:
     database_path = database_url
 else:
-    database_path = "postgresql://{}@{}/{}".format('sondr','localhost:5432', database_name)
+    database_path = "postgresql://{}@{}/{}".format(postgres_user,'localhost:5432', database_name)
 
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path

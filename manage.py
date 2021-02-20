@@ -1,6 +1,7 @@
 from flask_script import Manager
 from flask import Flask
 from flask_migrate import Migrate, MigrateCommand
+from dotenv import load_dotenv
 
 from app import app
 from models.models import db

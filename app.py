@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models.models import setup_db, db_drop, create_all, Wine, District
 from auth.auth import AuthError, requires_auth 
+from dotenv import load_dotenv
 
 
 
