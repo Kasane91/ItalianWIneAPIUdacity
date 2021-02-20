@@ -9,7 +9,8 @@ import json
 def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
-    create_all()
+    #create_all()
+    db_drop()
 
 
     @app.route('/', methods=['GET'])

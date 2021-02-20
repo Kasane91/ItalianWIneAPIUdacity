@@ -36,7 +36,7 @@ class Wine(db.Model):
     vintage = Column(Integer, nullable=False)
     grape = Column(Integer, nullable=False)
     vinyard = Column(String(50))
-    district_id = Column(Integer, ForeignKey=('district.id'), nullable=False)
+    district_id = Column(Integer, ForeignKey('districts.id'), nullable=False)
 
     
     def __init__(self, producer, vintage, grape, vinyard, district_id):
