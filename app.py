@@ -21,7 +21,13 @@ def create_app(test_config=None):
     setup_db(app)
     cors = CORS(app)
 
-    ''' UNCOMMENT THE FOLLOWING LINES, IF YOU WISH TO INITIALIZE THE DATABASE FROM SCRATCH - OTHERWISE USE PROVIDED DATABASE DUMP'''
+    '''
+    UNCOMMENT THE FOLLOWING LINES, IF YOU WISH TO INITIALIZE THE DATABASE FROM SCRATCH - 
+    OTHERWISE USE PROVIDED DATABASE DUMP COMMAND:
+    createdb italianwine
+    psql -d italianwine -U postgres -a -f italianwine.psql
+    
+    '''
     #create_all()
     #db_drop()
 
@@ -212,7 +218,7 @@ def create_app(test_config=None):
 
     @app.errorhandler(422)
     def unprocessable(error):
-    return jsonify({
+        return jsonify({
         "success": False, 
         "error": 422,
         "message": error.description
@@ -222,7 +228,7 @@ def create_app(test_config=None):
 
     @app.errorhandler(401)
     def unauthorized(error):
-    return jsonify({
+        return jsonify({
         "success": False, 
         "error": 401,
         "message": error.description
