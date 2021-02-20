@@ -255,10 +255,9 @@ def create_app(test_config=None):
       
     @app.errorhandler(AuthError)
     def handle_auth_error(exception):
-
-    response = jsonify(exception.error)
-    response.status_code = exception.status_code
-    return response
+        response = jsonify(exception.error)
+        response.status_code = exception.status_code
+        return response
    
 
 
