@@ -88,7 +88,7 @@ def create_app(test_config=None):
     #@TODO CREATE A GET ENDPOINT TO RETRIEVE LIST OF WINES SORTED BY DISTRICT
     @app.route('/districts/<int:district_id>', methods=['GET'])
     @requires_auth('get:wines')
-    def get_wines_sorted(district_id):
+    def get_wines_sorted(payload, district_id):
         wine = Wine.query.filter(district_id==district_id).all()
         district = District.query.filter(District.id == district_id).first()
 

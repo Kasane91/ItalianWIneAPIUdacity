@@ -8,9 +8,9 @@ from dotenv import load_dotenv
 
 
 
-AUTH0_DOMAIN ='dev-b7i37lqi.eu.auth0.com'
+AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'Wine'
+API_AUDIENCE = os.environ.get('API_AUDIENCE')
 
 ## AuthError Exception
 '''
