@@ -3,6 +3,7 @@ from flask import Flask, request, abort, jsonify, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models.models import setup_db, db_drop, create_all, Wine, District
+from auth.auth import AuthError, requires_auth 
 
 
 
@@ -26,7 +27,7 @@ def create_app(test_config=None):
     OTHERWISE USE PROVIDED DATABASE DUMP COMMAND:
     createdb italianwine
     psql -d italianwine -U postgres -a -f italianwine.psql
-    
+
     '''
     #create_all()
     #db_drop()
@@ -251,14 +252,14 @@ def create_app(test_config=None):
         }), 404
 
 
-    '''   
+      
     @app.errorhandler(AuthError)
     def handle_auth_error(exception):
 
     response = jsonify(exception.error)
     response.status_code = exception.status_code
     return response
-    '''
+   
 
 
 
