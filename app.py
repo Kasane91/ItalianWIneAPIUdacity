@@ -6,6 +6,10 @@ from models.models import setup_db, db_drop, create_all, Wine, District
 from auth.auth import AuthError, requires_auth 
 from dotenv import load_dotenv
 
+'''
+GENERATE TOKENS:
+https://dev-b7i37lqi.eu.auth0.com/authorize?audience=Wine&response_type=token&client_id=f7J8eQZl597jjobhwsF4aT2N6e7IHeYx&redirect_uri=http://127.0.0.1:5000
+'''
 
 
 obj_per_page = 8
@@ -48,7 +52,8 @@ def create_app(test_config=None):
     
     #@TODO CREATE A GET ENDPOINT TO RETRIEVE PAGINATED LISTS OF WINES
     @app.route('/wines', methods=['GET'])
-    def get_wines():
+    @requires_auth('get:wines')
+    def get_wines(payload):
         wines = Wine.query.all()
         if len(wines)==0:
             return abort(404, 'Resource not found. Not a valid district')
@@ -97,7 +102,8 @@ def create_app(test_config=None):
     
     #@TODO CREATE A POST ENDPOINT TO CREATE A WINE INSTANCE
     @app.route('/wines', methods=['POST'])
-    def create_wine():
+    @requires_auth('post:wines')
+    def create_wine(payload):
         body = request.get_json()
 
         wine_data = {
