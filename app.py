@@ -41,13 +41,14 @@ def create_app(test_config=None):
     @app.after_request
     def after_request(response):
         response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS')
-        response.headers.add('Access-Control-Allow-Headers', 'Authorization, true, Content-Type')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization, true')
+        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
 
     @app.route('/', methods=['GET'])
     def index():
-        return render_template("index.html")
+        return (os.environ.get)
 
     
     #@TODO CREATE A GET ENDPOINT TO RETRIEVE PAGINATED LISTS OF WINES
