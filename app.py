@@ -215,7 +215,7 @@ def create_app(test_config=None):
     return jsonify({
         "success": False, 
         "error": 422,
-        "message": "unprocessable"
+        "message": error.description
         }), 422
 
 
@@ -225,7 +225,7 @@ def create_app(test_config=None):
     return jsonify({
         "success": False, 
         "error": 401,
-        "message": "Unauthorized"
+        "message": error.description
         }), 401
 
     @app.errorhandler(403)
@@ -233,7 +233,7 @@ def create_app(test_config=None):
         return jsonify({
         "success": False, 
         "error": 403,
-        "message": error.message
+        "message": error.description
         }), 403
 
     @app.errorhandler(404)
@@ -241,9 +241,9 @@ def create_app(test_config=None):
         return jsonify({
         "success": False, 
         "error": 404,
-        "message": "not found"
+        "message": error.description
         }), 404
-        
+
 
     '''   
     @app.errorhandler(AuthError)
