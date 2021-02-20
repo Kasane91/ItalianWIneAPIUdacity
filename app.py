@@ -10,7 +10,7 @@ def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
     #create_all()
-    db_drop()
+    #db_drop()
 
 
     @app.route('/', methods=['GET'])
