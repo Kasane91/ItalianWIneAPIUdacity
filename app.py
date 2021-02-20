@@ -48,7 +48,10 @@ def create_app(test_config=None):
 
     @app.route('/', methods=['GET'])
     def index():
-        return (os.environ.get('message'))
+        first = os.environ.get('message')
+        second = os.environ.get('AUTH0_DOMAIN')
+        third = os.environ.get('API_AUDIENCE')
+        return (f'message: {first}, AUTH0: {second}, API_AUDIENCE: {third}' )
 
     
     #@TODO CREATE A GET ENDPOINT TO RETRIEVE PAGINATED LISTS OF WINES
