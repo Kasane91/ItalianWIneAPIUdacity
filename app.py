@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 '''
 GENERATE TOKENS:
-https://dev-b7i37lqi.eu.auth0.com/authorize?audience=Wine&response_type=token&client_id=f7J8eQZl597jjobhwsF4aT2N6e7IHeYx&redirect_uri=http://127.0.0.1:5000
+https://dev-b7i37lqi.eu.auth0.com/authorize?audience=Wine&response_type=token&client_id=f7J8eQZl597jjobhwsF4aT2N6e7IHeYx&redirect_uri=https://italianwineapi.herokuapp.com
 '''
 
 
@@ -52,8 +52,7 @@ def create_app(test_config=None):
     
     #@TODO CREATE A GET ENDPOINT TO RETRIEVE PAGINATED LISTS OF WINES
     @app.route('/wines', methods=['GET'])
-    @requires_auth('get:wines')
-    def get_wines(payload):
+    def get_wines():
         wines = Wine.query.all()
         if len(wines)==0:
             return abort(404, 'Resource not found. Not a valid district')
