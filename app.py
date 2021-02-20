@@ -68,7 +68,8 @@ def create_app(test_config=None):
 
     #@TODO CREATE A GET ENDPOINT TO RETRIEVE LIST OF DISTRICTS
     @app.route('/districts', methods=['GET'])
-    def get_districts():
+    @requires_auth('get:districts')
+    def get_districts(payload):
         districts = District.query.all()
 
         if len(districts) == 0:
@@ -83,6 +84,7 @@ def create_app(test_config=None):
 
     #@TODO CREATE A GET ENDPOINT TO RETRIEVE LIST OF WINES SORTED BY DISTRICT
     @app.route('/districts/<int:district_id>', methods=['GET'])
+    @requires_auth('get:wines')
     def get_wines_sorted(district_id):
         wine = Wine.query.filter(district_id==district_id).all()
         district = District.query.filter(District.id == district_id).first()
@@ -128,7 +130,8 @@ def create_app(test_config=None):
 
     #@TODO CREATEA  POST ENDPOINT TO CREATE A DISTRICT ENTRY
     @app.route('/districts', methods=['POST'])
-    def create_district():
+    @requires_auth('post:districts')
+    def create_district(payload):
         body = request.get_json()
         if not body: abort(422, 'Unprocessable entry')
 
@@ -149,7 +152,8 @@ def create_app(test_config=None):
 
     #@TODO CREATE A DELETE ENDPOINT TO REMOVE WINE BY ID
     @app.route('/wines/<int:wine_id>', methods=['DELETE'])
-    def delete_wine(wine_id):
+    @requires_auth('delete:wines')
+    def delete_wine(payload, wine_id):
         wine = Wine.query.get(wine_id)
 
         if wine:
@@ -163,7 +167,8 @@ def create_app(test_config=None):
 
     #@TODO CREATE A DELETE ENDPOINT TO REMOVE DISTRICT BY ID
     @app.route('/districts/<int:district_id>', methods=['DELETE'])
-    def delete_district(district_id):
+    @requires_auth('delete:districts')
+    def delete_district(payload, district_id):
         district = District.query.get(district_id)
 
         if district:
@@ -175,7 +180,8 @@ def create_app(test_config=None):
 
     #@TODO CREATE A PATCH ENDPOINT TO EDIT WINE RATING:
     @app.route('/wines/<int:wine_id>', methods=['PATCH'])
-    def edit_wine(wine_id):
+    @requires_auth('patch:wines')
+    def edit_wine(payload, wine_id):
         wine = Wine.query.get(wine_id)
 
         if not wine:
@@ -210,7 +216,8 @@ def create_app(test_config=None):
 
     #@TODO CREATE A PATCH ENDPOINT TO EDIT DISTRICT PARAMETERS
     @app.route('/district/<int:district_id>', methods=['PATCH'])
-    def edit_district(district_id):
+    @requires_auth('patch:districts')
+    def edit_district(payload, district_id):
         district = District.query.get(district_id)
 
         if not district:
