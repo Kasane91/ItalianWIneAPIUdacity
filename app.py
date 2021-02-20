@@ -130,8 +130,8 @@ def create_app(test_config=None):
 
     #@TODO CREATEA  POST ENDPOINT TO CREATE A DISTRICT ENTRY
     @app.route('/districts', methods=['POST'])
-    @requires_auth('post:districts')
-    def create_district(payload):
+    #@requires_auth('post:districts')
+    def create_district():
         body = request.get_json()
         if not body: abort(422, 'Unprocessable entry')
 
