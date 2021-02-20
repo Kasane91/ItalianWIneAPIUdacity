@@ -34,16 +34,18 @@ class Wine(db.Model):
     id = Column(Integer, primary_key=True)
     producer = Column(String(100), nullable=False)
     vintage = Column(Integer, nullable=False)
-    grape = Column(Integer, nullable=False)
+    grape = Column(String, nullable=False)
     vinyard = Column(String(50))
+    rating = Column(Integer)
     district_id = Column(Integer, ForeignKey('districts.id'), nullable=False)
 
     
-    def __init__(self, producer, vintage, grape, vinyard, district_id):
+    def __init__(self, producer, vintage, grape, vinyard, rating, district_id):
         self.producer = producer
         self.vintage = vintage
         self.grape = grape
         self.vinyard = vinyard
+        self.rating = rating
         self.district_id = district_id
     
 
@@ -66,6 +68,7 @@ class Wine(db.Model):
             'vintage': self.vintage,
             'grape': self.grape,
             'vinyard': self.vinyard,
+            'rating': self.rating,
             'district_id': self.district_id
         }
     
@@ -80,7 +83,7 @@ class District(db.Model):
 
     def __init__(self, name, province):
         self.name = name
-        self.producer = producer
+        self.province = province
 
     def insert(self):
         db.session.add(self)
