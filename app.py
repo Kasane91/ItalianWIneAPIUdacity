@@ -57,10 +57,11 @@ def create_app(test_config=None):
     @requires_auth('get:wines')
     def get_wines(payload):
         wines = Wine.query.all()
-        if len(wines)==0:
-            return abort(404, 'Resource not found. Not a valid district')
+        
 
         wines_paginated = paginate_obj(request, wines)
+        if len(wines_paginated)==0:
+            return abort(404, 'Resource not found. Not a valid district')
 
         return jsonify({
             'success': True,
@@ -74,9 +75,10 @@ def create_app(test_config=None):
     def get_districts(payload):
         districts = District.query.all()
 
-        if len(districts) == 0:
-            return abort(404, 'Resource not found')
+        
         districts_paginated = paginate_obj(request, districts)
+        if len(districts_paginated) == 0:
+            return abort(404, 'Resource not found')
 
         return jsonify({
             'success': True,
@@ -157,15 +159,16 @@ def create_app(test_config=None):
     @requires_auth('delete:wines')
     def delete_wine(payload, wine_id):
         wine = Wine.query.get(wine_id)
-
-        if wine:
-            wine.delete()
-            return jsonify({
-                'success': True,
-                'deleted': wine.format()
-            })
-        else:
+        if not wine:
             return abort(404, f'Wine with id {wine_id} does not exist')
+        
+        wine.delete()
+        return jsonify({
+            'success': True,
+            'deleted': wine.format()
+        })
+    
+            
 
     
     @app.route('/districts/<int:district_id>', methods=['DELETE'])

@@ -45,12 +45,14 @@ def check_permissions(permission, payload):
     if 'permissions' not in payload:
         raise AuthError({
             'code': 'unauthorized',
+            'success': False,
             'description': 'Unvalid permission'
         }, 401)
 
     if permission not in payload['permissions']:
         raise AuthError({
             'code': 'unauthorized',
+            'success': False,
             'description': 'Unvalid permission'
         }, 401)
     return True
@@ -65,6 +67,7 @@ def verify_decode_jwt(token):
     if 'kid' not in unverified_header:
         raise AuthError({
             'code': 'invalid_header',
+            'success': False,
             'description': 'Authorization malformed.'
         }, 401)
 
