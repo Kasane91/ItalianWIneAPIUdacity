@@ -33,6 +33,21 @@ class WineApiTestCase(unittest.TestCase):
             'rating': '89',
             'district_id': '2'
         }
+        self.new_wine_incomplete_data = {
+            'producer': 'Scarpa',
+            'vinyard': "La Bogliona",
+            'rating': 89,
+            'district_id': '2'
+        }
+
+        self.new_district = {
+            'name': 'Montefalco',
+            'province': 'Piemonte'
+        }
+
+        self.new_district_incomplete_data = {
+            'name': 'Montestefano'
+        }
 
         self.subscriber_header = {"Authorization":f'Bearer {self.subscriber_token}'}
 
@@ -70,7 +85,7 @@ class WineApiTestCase(unittest.TestCase):
     def test_get_wines_authorized(self):
 
 
-        res = self.client().get('/wines', headers=self.editor_header,)
+        res = self.client().get('/wines', headers=self.subscriber_header,)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -79,7 +94,7 @@ class WineApiTestCase(unittest.TestCase):
     def test_get_wines_paginated_authorized(self):
 
 
-        res = self.client().get('/wines?page=1', headers=self.editor_header,)
+        res = self.client().get('/wines?page=1', headers=self.subscriber_header,)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -94,6 +109,23 @@ class WineApiTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 404)    
 
 
+    def test_get_wine_by_id_authorized(self):
+        res = self.client().get('/wines/1', headers=self.editor_header)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+
+    def test_fail_get_wine_by_id_out_of_bounds(self):
+        res = self.client().get('/wines/1000', headers=self.editor_header)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+        
+
+
     def test_get_districts_unauthorized(self):
         res = self.client().get('/districts')
         data = json.loads(res.data)
@@ -103,14 +135,50 @@ class WineApiTestCase(unittest.TestCase):
 
 
     def test_get_districts_authorized(self):
-
-
-        res = self.client().get('/wines', headers=self.editor_header,)
+        res = self.client().get('/wines', headers=self.editor_header)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
 
+    def test_get_wines_by_district(self):
+        res = self.client().get('/districts/1', headers=self.editor_header)
+        data = json.loads(res.data)
 
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+
+    def test_fail_get_wines_by_out_of_bounds_district(self):
+        res = self.client().get('/districts/1000', headers=self.editor_header)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+    
+    def test_insert_district_authorized(self):
+        res = self.client().post('/districts', headers=self.editor_header, json=self.new_district)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['created'], True)
+    
+
+    def test_insert_district_unauthorized(self):
+        res = self.client().post('/districts', headers=self.subscriber_header, json=self.new_district)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 401)
+        self.assertEqual(data['success'], False)
+
+
+    def test_insert_district_incomplete_data(self):
+        res = self.client().post('/districts', headers=self.editor_header, json=self.new_district_incomplete_data)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 422)
+        self.assertEqual(data['success'], False)
+
+    
     def test_insert_wine_authorized(self):
 
         res = self.client().post('/wines', headers=self.editor_header, json=self.new_wine)
@@ -118,6 +186,7 @@ class WineApiTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
+
 
     def test_insert_wine_unauthorized(self):
 
@@ -127,7 +196,67 @@ class WineApiTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)    
 
+    
+    def test_fail_insert_wine_incomplete_data(self):
 
+        res = self.client().post('/wines', headers=self.editor_header, json=self.new_wine_incomplete_data)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 422)
+
+
+    def test_delete_wine_authorized(self):
+
+        #Creates a new instance of a wine object so it never deletes an actual database instance
+
+        wine = Wine(**self.new_wine)
+        wine.insert()
+        id_wine = wine.id
+        res = self.client().delete(f'/wines/{id_wine}', headers=self.editor_header)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['deleted'], True)
+
+
+    def test_delete_wine_unauthorzied(self):
+        res = self.client().delete('/wines/1', headers=self.subscriber_header)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 401)
+        self.assertEqual(data['success'], False)
+
+
+    def test_fail_delete_wine_out_of_bounds(self):
+        res = self.client().delete('/wines/2000', headers=self.editor_header)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code,404)
+        self.assertEqual(data['success'], False)
+
+    
+    def test_delete_district_authorized(self):
+
+        district = District(**self.new_district)
+        district.insert()
+        id_district = district.id
+
+        res = self.client().delete(f'/districts/{id_district}', headers=self.editor_header)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['deleted'], True)
+    
+
+    def test_delete_district_unauthorized(self):
+
+        res = self.client().delete(f'/districts/1', headers=self.subscriber_header)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 401)
+        self.assertEqual(data['success'], False)
+    
+    
 
 
 if __name__ == "__main__":

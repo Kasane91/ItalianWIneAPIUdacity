@@ -68,6 +68,16 @@ def create_app(test_config=None):
             'wines': wines_paginated
         })
 
+    @app.route('/wines/<int:wine_id>', methods=['GET'])
+    @requires_auth('get:wines')
+    def get_wines_by_id(payload, wine_id):
+        wine = Wine.query.get(wine_id)
+        if not wine: return abort(404, "Wine does not exist")
+
+        return jsonify({
+            'success': True,
+            'wine': wine.format()
+        })
 
     
     @app.route('/districts', methods=['GET'])
@@ -90,13 +100,17 @@ def create_app(test_config=None):
     @app.route('/districts/<int:district_id>', methods=['GET'])
     @requires_auth('get:wines')
     def get_wines_sorted(payload, district_id):
+        
         wine = Wine.query.filter(district_id==district_id).all()
         district = District.query.filter(District.id == district_id).first()
 
-        if len(wine)== 0:
-            abort(404, 'Resources not found. Not a valid district')
+        if district is None:
+            abort(404, "Resource not found. Not a valdid district")
         
         wine_paginated = paginate_obj(request, wine)
+        if len(wine_paginated)== 0:
+            abort(404, 'Resources not found. No wines in district')
+        
 
         return jsonify({
             'success': True,
@@ -104,6 +118,7 @@ def create_app(test_config=None):
             'district': district.name
         })
         
+    
 
     
     
@@ -111,21 +126,20 @@ def create_app(test_config=None):
     @requires_auth('post:wines')
     def create_wine(payload):
         body = request.get_json()
-
+        
         wine_data = {
             'producer': body.get('producer'),
-            'vintage': int(body.get('vintage')),
+            'vintage': body.get('vintage'),
             'grape': body.get('grape'),
             'vinyard': body.get('vinyard'),
-            'rating': int(body.get('rating')),
-            'district_id': int(body.get('district_id'))
+            'rating': body.get('rating'),
+            'district_id': body.get('district_id')
         }
-        if 'producer' and 'vintage' and 'grape' and 'district_id' not in wine_data:
-            return abort(422, 'Unprocessable entry')
-        
-        wine = Wine(**wine_data)
-        
-        wine.insert()
+        try:
+            wine = Wine(**wine_data)
+            wine.insert()
+        except:
+            return abort(422, "Incomplete body")
 
         return jsonify({
             'success': True,
@@ -137,15 +151,16 @@ def create_app(test_config=None):
     @requires_auth('post:districts')
     def create_district(payload):
         body = request.get_json()
-        if not body: abort(422, 'Unprocessable entry')
 
         district_data = {
             'name': body.get('name'),
             'province': body.get('province')
         }
-
-        district = District(**district_data)
-        district.insert()
+        try:
+            district = District(**district_data)
+            district.insert()
+        except:
+            return abort(422, "Incomplete body")
 
         return jsonify({
             'success': True,
