@@ -1,0 +1,232 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.1
+-- Dumped by pg_dump version 13.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: alembic_version; Type: TABLE; Schema: public; Owner: sondr
+--
+
+CREATE TABLE public.alembic_version (
+    version_num character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.alembic_version OWNER TO sondr;
+
+--
+-- Name: districts; Type: TABLE; Schema: public; Owner: sondr
+--
+
+CREATE TABLE public.districts (
+    id integer NOT NULL,
+    name character varying(50) NOT NULL,
+    province character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.districts OWNER TO sondr;
+
+--
+-- Name: districts_id_seq; Type: SEQUENCE; Schema: public; Owner: sondr
+--
+
+CREATE SEQUENCE public.districts_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.districts_id_seq OWNER TO sondr;
+
+--
+-- Name: districts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sondr
+--
+
+ALTER SEQUENCE public.districts_id_seq OWNED BY public.districts.id;
+
+
+--
+-- Name: wines; Type: TABLE; Schema: public; Owner: sondr
+--
+
+CREATE TABLE public.wines (
+    id integer NOT NULL,
+    producer character varying(100) NOT NULL,
+    vintage integer NOT NULL,
+    grape character varying NOT NULL,
+    vinyard character varying(50),
+    rating integer,
+    district_id integer
+);
+
+
+ALTER TABLE public.wines OWNER TO sondr;
+
+--
+-- Name: wines_id_seq; Type: SEQUENCE; Schema: public; Owner: sondr
+--
+
+CREATE SEQUENCE public.wines_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.wines_id_seq OWNER TO sondr;
+
+--
+-- Name: wines_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sondr
+--
+
+ALTER SEQUENCE public.wines_id_seq OWNED BY public.wines.id;
+
+
+--
+-- Name: districts id; Type: DEFAULT; Schema: public; Owner: sondr
+--
+
+ALTER TABLE ONLY public.districts ALTER COLUMN id SET DEFAULT nextval('public.districts_id_seq'::regclass);
+
+
+--
+-- Name: wines id; Type: DEFAULT; Schema: public; Owner: sondr
+--
+
+ALTER TABLE ONLY public.wines ALTER COLUMN id SET DEFAULT nextval('public.wines_id_seq'::regclass);
+
+
+--
+-- Data for Name: alembic_version; Type: TABLE DATA; Schema: public; Owner: sondr
+--
+
+COPY public.alembic_version (version_num) FROM stdin;
+49af865411dc
+\.
+
+
+--
+-- Data for Name: districts; Type: TABLE DATA; Schema: public; Owner: sondr
+--
+
+COPY public.districts (id, name, province) FROM stdin;
+1	Barbaresco	Piemonte
+2	Barolo	Piemonte
+3	Barbera d'Alba	Piemonte
+4	Chianti Classico	Toscana
+5	Montalcino	Toscana
+6	Chianti Rufina	Toscana
+7	Montepulciano	Toscana
+8	Etna Rosso	Sicilia
+\.
+
+
+--
+-- Data for Name: wines; Type: TABLE DATA; Schema: public; Owner: sondr
+--
+
+COPY public.wines (id, producer, vintage, grape, vinyard, rating, district_id) FROM stdin;
+1	Proddutori del Barbaresco	2016	Nebbiolo	Rabaja	96	1
+2	Proddutori del Barbaresco	2010	Nebbiolo	Asili	98	1
+3	Proddutori del Barbaresco	2007	Nebbiolo	Paje	92	1
+4	Proddutori del Barbaresco	2007	Nebbiolo	Pora	92	1
+5	Bruno Giacosa	2007	Nebbiolo	Barbaresco Red Label Asili	100	1
+6	Bruno Giacosa	2001	Nebbiolo	Barbaresco Red Label Asili	96	1
+7	Giovanni Rosso Barolo	2016	Nebbiolo	Ester Canale Rosso	100	2
+8	Giovanni Rosso Barolo	2007	Nebbiolo	Ester Canale Rosso	100	2
+9	Giovanni Rosso Barolo	2016	Nebbiolo	Serralunga d'Alba	89	2
+10	Bruno Giacosa Barolo	2016	Nebbiolo	Cannubi	96	2
+11	Bruno Giacosa Barolo	2010	Nebbiolo	Serralunga	98	2
+12	Luciano Sandrone	2010	Nebbiolo	Le Vigne	98	2
+13	Luciano Sandrone	2011	Nebbiolo	Le Vigne	95	2
+14	Gaja	2001	Nebbiolo	Sperrs	93	2
+15	Poliziano	2016	Sangiovese	Asinone	100	8
+16	Poliziano	2017	Sangiovese	Asinone	100	8
+17	Poliziano	2016	Sangiovese	Vino Nobile	93	8
+18	Felsina Chianti Classico	2010	Sangiovese	Gran Selezione	91	4
+19	Felsina Chianti Classico	2011	Sangiovese	Reserva	89	4
+20	Gaja	2011	Sangiovese	Brunello Di Montalcino	98	5
+21	Gaja	2010	Sangiovese	Brunello Di Montalcino	99	5
+22	Biondi Santi	2010	Sangiovese	Brunello Di Montalcino	94	5
+23	Biondi Santi	2010	Sangiovese	Brunello Di Montalcino Riserva	99	5
+24	Talenti	2011	Sangiovese	Brunello Di Montalcino Riserva	96	5
+25	Massolino Barolo	2011	Nebbiolo	Vigna Rionda	92	2
+26	Massolino Barolo	2006	Nebbiolo	Vigna Rionda	99	2
+27	Eduardo Torres	2017	Nerello Mescalese	Pirra	97	2
+28	Eduardo Torres	2016	Nerello Mescalese	Pirra	95	2
+\.
+
+
+--
+-- Name: districts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sondr
+--
+
+SELECT pg_catalog.setval('public.districts_id_seq', 8, true);
+
+
+--
+-- Name: wines_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sondr
+--
+
+SELECT pg_catalog.setval('public.wines_id_seq', 28, true);
+
+
+--
+-- Name: alembic_version alembic_version_pkc; Type: CONSTRAINT; Schema: public; Owner: sondr
+--
+
+ALTER TABLE ONLY public.alembic_version
+    ADD CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num);
+
+
+--
+-- Name: districts districts_pkey; Type: CONSTRAINT; Schema: public; Owner: sondr
+--
+
+ALTER TABLE ONLY public.districts
+    ADD CONSTRAINT districts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: wines wines_pkey; Type: CONSTRAINT; Schema: public; Owner: sondr
+--
+
+ALTER TABLE ONLY public.wines
+    ADD CONSTRAINT wines_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: wines wines_district_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sondr
+--
+
+ALTER TABLE ONLY public.wines
+    ADD CONSTRAINT wines_district_id_fkey FOREIGN KEY (district_id) REFERENCES public.districts(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
