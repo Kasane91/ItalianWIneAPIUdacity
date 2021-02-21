@@ -7,8 +7,7 @@ from auth.auth import AuthError, requires_auth
 from dotenv import load_dotenv
 
 '''
-GENERATE TOKENS:
-https://dev-b7i37lqi.eu.auth0.com/authorize?audience=Wine&response_type=token&client_id=f7J8eQZl597jjobhwsF4aT2N6e7IHeYx&redirect_uri=https://italianwineapi.herokuapp.com
+
 '''
 
 
@@ -28,9 +27,8 @@ def create_app(test_config=None):
     cors = CORS(app)
 
     '''
-    UNCOMMENT THE LINES BELOW LINES, IF YOU WISH TO INITIALIZE THE DATABASE FROM SCRATCH -
     Uncomment the lines below __IF__ you wish to intitialize the database from scratch, 
-    however it is recommended  use the provided database:
+    However it is recommended  use the provided database:
     createdb italianwine
     psql italianwine < italianwine.psql
     OR 

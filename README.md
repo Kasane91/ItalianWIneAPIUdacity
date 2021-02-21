@@ -135,6 +135,8 @@ source setup.sh
 python test_api.py
 ```
 
+
+
 # POSTMAN
 A folder of POSTMAN request collections used while developing has also been provided for reviewers convenience.
 They are organized with both a local and a live version, containing tests and active JWT_tokens
