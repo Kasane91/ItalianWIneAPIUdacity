@@ -1,0 +1,387 @@
+{
+	"info": {
+		"_postman_id": "6682cb07-3707-4083-87c4-c1c3adc2895d",
+		"name": "WINE API TEST SUBSCRIBER HEROKU LIVE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /WINES paginated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/wines",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"wines"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /WINES/<by_id>",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/wines/8",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"wines",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /DISTRICTS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/districts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"districts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/GET WINES BY DISTRICT ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/districts/2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"districts",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/DISTRICT (CREATE DISTRICT)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    {\r\n\t\"name\": \"Barbaresco\",\r\n\t\"province\": \"Piemonte\"\r\n    }\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/districts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"districts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/WINES (CREATE WINE)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    {\r\n\t\"producer\": \"Proddutori del Barbaresco\",\r\n\t\"vintage\": \"2016\",\r\n    \"grape\": \"Nebbiolo\",\r\n    \"vinyard\": \"Rabaja\",\r\n    \"rating\": \"96\",\r\n    \"district_id\": \"2\"\r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/wines",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"wines"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/DELETE WINE BY ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/wines/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"wines",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE DISTRICT BY ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/districts/3",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"districts",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/PATCH WINE BY ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rating\": \"90\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/wines/6",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"wines",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/PATCH DISTRICT BY ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n\t\"name\": \"Barbaresco\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/districts/2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"districts",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjExZEVvcEF5ZWtRSXY2SDhsV3NJNSJ9.eyJpc3MiOiJodHRwczovL2Rldi1iN2kzN2xxaS5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjAyN2IyZTNjNmNlMmUwMDY5NWZlYTFkIiwiYXVkIjoiV2luZSIsImlhdCI6MTYxMzkzNDkzNywiZXhwIjoxNjE0MDIxMzM3LCJhenAiOiJmN0o4ZVFabDU5N2pqb2Jod3NGNGFUMk42ZTdJSGVZeCIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmRpc3RyaWN0cyIsImdldDp3aW5lcyJdfQ.Ks7gZtBd7B-t8Jx7DUagQ0GgqBVko3PqUmOhsPFJGKCtcCNsqd8nbO8vxfJwTan_oRu6gj685eXVOwfc6130zAr_NGQO0m4eIP_tGHb7DBRCwCPdiHvAyvy8Qbf422apXgGeEBL8hGU5VKGQE-pJY6nBp2vA8fTcojZeSxkG46nnm6_R_B7sBpBV17ByUh8PCeYyyy7dLSPTHs6MWdOD6nCvdeJlBh0DExRE-95RlLDH04ekyRwZ_IHazytJ0us9nPXOshSiL8_cfQG2MxMWsXYqPyhIwuBbRJu4nCJWWxR_ngls2r-qxvdFLPVHjwQhxUksxsApht8PFuQowYIZ1Q",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "https://italianwineapi.herokuapp.com/"
+		}
+	]
+}

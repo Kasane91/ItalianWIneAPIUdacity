@@ -1,0 +1,376 @@
+{
+	"info": {
+		"_postman_id": "4ac929e9-9108-4e95-935a-f3ee4f8b867c",
+		"name": "WINE API TEST EDITOR LOCAL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /WINES paginated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/wines",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"wines"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /WINES/<by_id>",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/wines/4",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"wines",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /DISTRICTS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/districts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"districts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/GET WINES BY DISTRICT ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/districts/2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"districts",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/DISTRICT (CREATE DISTRICT)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    {\r\n\t\"name\": \"Barbaresco\",\r\n\t\"province\": \"Piemonte\"\r\n    }\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/districts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"districts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/WINES (CREATE WINE)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    {\r\n\t\"producer\": \"Proddutori del Barbaresco\",\r\n\t\"vintage\": \"2016\",\r\n    \"grape\": \"Nebbiolo\",\r\n    \"vinyard\": \"Rabaja\",\r\n    \"rating\": \"96\",\r\n    \"district_id\": \"2\"\r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/wines",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"wines"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/DELETE WINE BY ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/wines/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"wines",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE DISTRICT BY ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/districts/3",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"districts",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/PATCH WINE BY ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rating\": \"90\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/wines/6",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"wines",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/PATCH DISTRICT BY ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n\t\"name\": \"Barbaresco\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/districts/2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"districts",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjExZEVvcEF5ZWtRSXY2SDhsV3NJNSJ9.eyJpc3MiOiJodHRwczovL2Rldi1iN2kzN2xxaS5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjAyYTY4Yzc3MjY2NjUwMDZhMmI1NzA0IiwiYXVkIjoiV2luZSIsImlhdCI6MTYxMzkzMzExNSwiZXhwIjoxNjE0MDE5NTE1LCJhenAiOiJmN0o4ZVFabDU5N2pqb2Jod3NGNGFUMk42ZTdJSGVZeCIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmRpc3RyaWN0cyIsImRlbGV0ZTp3aW5lcyIsImdldDpkaXN0cmljdHMiLCJnZXQ6d2luZXMiLCJwYXRjaDpkaXN0cmljdHMiLCJwYXRjaDp3aW5lcyIsInBvc3Q6ZGlzdHJpY3RzIiwicG9zdDp3aW5lcyJdfQ.QyYgKcW08obqarBVihu0GJYXmL6acIU3lbkSUJiW1lrqKNciI3HuB2RBzDLwasLOiHme86y26hLRbCE-KeXL88R3TlPeTk5Kw59R_M7g7JuOUa80N6Ch9VJHBIWbzg0cXl5mLHswIXnPfQkbIFsAND1m6djmoG5feT8net9AfPF12NWCu-DHoc5CdWNbQmCNvC9rs2YGN5kLPcijdgodndB6n63oovvT3ADbC-9qK4lZjw7wdKSr-yHdF5Yd1vy_kiX7J20K3sdRBBKmmmqCALPU52tp5apCYj2T55raEgfYBAGbAvY-4lG4ttmX2-TKYWSh_k9uBNTD1FkeyVEMQg",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "localhost:5000"
+		}
+	]
+}
