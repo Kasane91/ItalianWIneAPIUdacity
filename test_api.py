@@ -308,7 +308,7 @@ class WineApiTestCase(unittest.TestCase):
         data = json.loads(res.data)
     
         self.assertEqual(res.status_code,404)
-        self.assertFalse(data['Wine']['rating'], True)
+        
 
 
     #OMG THAT'S A LOT OF TESTS
