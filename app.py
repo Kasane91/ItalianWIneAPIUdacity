@@ -52,9 +52,10 @@ def create_app(test_config=None):
         return render_template("index.html")
 
     
-    #@TODO CREATE A GET ENDPOINT TO RETRIEVE PAGINATED LISTS OF WINES
+    
     @app.route('/wines', methods=['GET'])
-    def get_wines():
+    @requires_auth('get:wines')
+    def get_wines(payload):
         wines = Wine.query.all()
         if len(wines)==0:
             return abort(404, 'Resource not found. Not a valid district')
@@ -67,7 +68,7 @@ def create_app(test_config=None):
         })
 
 
-    #@TODO CREATE A GET ENDPOINT TO RETRIEVE LIST OF DISTRICTS
+    
     @app.route('/districts', methods=['GET'])
     @requires_auth('get:districts')
     def get_districts(payload):
@@ -83,7 +84,7 @@ def create_app(test_config=None):
         })
 
 
-    #@TODO CREATE A GET ENDPOINT TO RETRIEVE LIST OF WINES SORTED BY DISTRICT
+    
     @app.route('/districts/<int:district_id>', methods=['GET'])
     @requires_auth('get:wines')
     def get_wines_sorted(payload, district_id):
@@ -103,7 +104,7 @@ def create_app(test_config=None):
         
 
     
-    #@TODO CREATE A POST ENDPOINT TO CREATE A WINE INSTANCE
+    
     @app.route('/wines', methods=['POST'])
     @requires_auth('post:wines')
     def create_wine(payload):
@@ -129,10 +130,10 @@ def create_app(test_config=None):
             'wine': wine.format()
         })
 
-    #@TODO CREATEA  POST ENDPOINT TO CREATE A DISTRICT ENTRY
+    
     @app.route('/districts', methods=['POST'])
-    #@requires_auth('post:districts')
-    def create_district():
+    @requires_auth('post:districts')
+    def create_district(payload):
         body = request.get_json()
         if not body: abort(422, 'Unprocessable entry')
 
@@ -151,7 +152,7 @@ def create_app(test_config=None):
 
 
 
-    #@TODO CREATE A DELETE ENDPOINT TO REMOVE WINE BY ID
+    
     @app.route('/wines/<int:wine_id>', methods=['DELETE'])
     @requires_auth('delete:wines')
     def delete_wine(payload, wine_id):
@@ -166,7 +167,7 @@ def create_app(test_config=None):
         else:
             return abort(404, f'Wine with id {wine_id} does not exist')
 
-    #@TODO CREATE A DELETE ENDPOINT TO REMOVE DISTRICT BY ID
+    
     @app.route('/districts/<int:district_id>', methods=['DELETE'])
     @requires_auth('delete:districts')
     def delete_district(payload, district_id):
@@ -179,7 +180,7 @@ def create_app(test_config=None):
                 'deleted': district.format()
             })
 
-    #@TODO CREATE A PATCH ENDPOINT TO EDIT WINE RATING:
+    
     @app.route('/wines/<int:wine_id>', methods=['PATCH'])
     @requires_auth('patch:wines')
     def edit_wine(payload, wine_id):
@@ -215,7 +216,7 @@ def create_app(test_config=None):
             'Wine': wine.format()
         })
 
-    #@TODO CREATE A PATCH ENDPOINT TO EDIT DISTRICT PARAMETERS
+    
     @app.route('/district/<int:district_id>', methods=['PATCH'])
     @requires_auth('patch:districts')
     def edit_district(payload, district_id):
