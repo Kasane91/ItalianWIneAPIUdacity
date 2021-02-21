@@ -290,12 +290,28 @@ class WineApiTestCase(unittest.TestCase):
 
         res = self.client().patch('/wines/5', headers =self.editor_header, json={"rating":"75"})
         data = json.loads(res.data)
-        print(data)
-
+    
         self.assertEqual(res.status_code,200)
         self.assertEqual(data['Wine']['rating'], 75)
+    
+    def test_edit_wine_unauthorized(self):
+
+        res = self.client().patch('/wines/5', headers =self.subscriber_header, json={"rating":"85"})
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 401)
+        self.assertEqual(data['success'], False)
+
+    def test_edit_wine_out_of_bounds(self):
+
+        res = self.client().patch('/wines/2000', headers =self.editor_header, json={"rating":"75"})
+        data = json.loads(res.data)
+    
+        self.assertEqual(res.status_code,404)
+        self.assertFalse(data['Wine']['rating'], True)
 
 
+    #OMG THAT'S A LOT OF TESTS
 
 
 if __name__ == "__main__":
