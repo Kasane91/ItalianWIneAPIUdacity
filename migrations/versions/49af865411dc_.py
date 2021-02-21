@@ -31,7 +31,7 @@ def upgrade():
     sa.Column('grape', sa.String(), nullable=False),
     sa.Column('vinyard', sa.String(length=50), nullable=True),
     sa.Column('rating', sa.Integer(), nullable=True),
-    sa.Column('district_id', sa.Integer(), nullable=False),
+    sa.Column('district_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['district_id'], ['districts.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
