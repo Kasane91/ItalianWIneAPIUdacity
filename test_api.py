@@ -271,13 +271,31 @@ class WineApiTestCase(unittest.TestCase):
 
     def test_edit_district_unauthorized(self):
 
-        res = self.client().patch('/districts/30', headers=self.editor_header, json={"name":"Soave Classico"})
+        res = self.client().patch('/districts/30', headers=self.subscriber_header, json={"name":"Soave Imana"})
         data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['district'], True)
+        self.assertEqual(res.status_code, 401)
+        self.assertEqual(data['success'], False)
 
-    
+    def test_fail_edit_district_out_of_bounds(self):
+
+        res = self.client().patch('/districts/2000', headers=self.editor_header, json={"name":"Soave Imana"})
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+
+
+    def test_edit_wine_authorized(self):
+
+        res = self.client().patch('/wines/5', headers =self.editor_header, json={"rating":"75"})
+        data = json.loads(res.data)
+        print(data)
+
+        self.assertEqual(res.status_code,200)
+        self.assertEqual(data['Wine']['rating'], 75)
+
+
 
 
 if __name__ == "__main__":
