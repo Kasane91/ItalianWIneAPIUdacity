@@ -255,9 +255,30 @@ class WineApiTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
+
+    def test_fail_delete_district_out_of_bounds(self):
+
+        res = self.client().delete('/districts/2000', headers=self.editor_header)
+        data = json.loads(res.data)
     
+    def test_edit_district_authorized(self):
+
+        res = self.client().patch('/districts/30', headers=self.editor_header, json={"name":"Soave Classico"})
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['district'], True)
+
+    def test_edit_district_unauthorized(self):
+
+        res = self.client().patch('/districts/30', headers=self.editor_header, json={"name":"Soave Classico"})
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['district'], True)
+
     
 
 
 if __name__ == "__main__":
-        unittest.main()
+        unittest.main() 

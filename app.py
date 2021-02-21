@@ -100,7 +100,7 @@ def create_app(test_config=None):
     @app.route('/districts/<int:district_id>', methods=['GET'])
     @requires_auth('get:wines')
     def get_wines_sorted(payload, district_id):
-        
+
         wine = Wine.query.filter(district_id==district_id).all()
         district = District.query.filter(District.id == district_id).first()
 
@@ -191,12 +191,14 @@ def create_app(test_config=None):
     def delete_district(payload, district_id):
         district = District.query.get(district_id)
 
-        if district:
-            district.delete()
-            return jsonify({
-                'success': True,
-                'deleted': district.format()
-            })
+        if not district:
+            return abort(404, f'District with id {district_id} does not exist')
+
+        district.delete()
+        return jsonify({
+            'success': True,
+            'deleted': district.format()
+        })
 
     
     @app.route('/wines/<int:wine_id>', methods=['PATCH'])
@@ -229,13 +231,13 @@ def create_app(test_config=None):
 
         wine.update()
 
-        return json({
+        return jsonify({
             'success': True,
             'Wine': wine.format()
         })
 
     
-    @app.route('/district/<int:district_id>', methods=['PATCH'])
+    @app.route('/districts/<int:district_id>', methods=['PATCH'])
     @requires_auth('patch:districts')
     def edit_district(payload, district_id):
         district = District.query.get(district_id)
@@ -250,6 +252,13 @@ def create_app(test_config=None):
 
         province = body.get('province')
         district.province = province if province else district.province
+
+        district.update()
+
+        return jsonify({
+            'success': True,
+            'district': district.format()
+        })
 
     @app.errorhandler(422)
     def unprocessable(error):
