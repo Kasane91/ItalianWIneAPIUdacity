@@ -263,7 +263,7 @@ class WineApiTestCase(unittest.TestCase):
     
     def test_edit_district_authorized(self):
 
-        res = self.client().patch('/districts/30', headers=self.editor_header, json={"name":"Soave Classico"})
+        res = self.client().patch('/districts/10', headers=self.editor_header, json={"name":"Soave Classico"})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -271,7 +271,7 @@ class WineApiTestCase(unittest.TestCase):
 
     def test_edit_district_unauthorized(self):
 
-        res = self.client().patch('/districts/30', headers=self.subscriber_header, json={"name":"Soave Imana"})
+        res = self.client().patch('/districts/10', headers=self.subscriber_header, json={"name":"Soave Imana"})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 401)

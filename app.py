@@ -28,11 +28,13 @@ def create_app(test_config=None):
     cors = CORS(app)
 
     '''
-    UNCOMMENT THE FOLLOWING LINES, IF YOU WISH TO INITIALIZE THE DATABASE FROM SCRATCH - 
-    OTHERWISE USE PROVIDED DATABASE DUMP COMMAND:
+    UNCOMMENT THE LINES BELOW LINES, IF YOU WISH TO INITIALIZE THE DATABASE FROM SCRATCH -
+    Uncomment the lines below __IF__ you wish to intitialize the database from scratch, 
+    however it is recommended  use the provided database:
     createdb italianwine
+    psql italianwine < italianwine.psql
+    OR 
     psql -d italianwine -U postgres -a -f italianwine.psql
-
     '''
     #create_all()
     #db_drop()
@@ -49,7 +51,10 @@ def create_app(test_config=None):
     @app.route('/', methods=['GET'])
     def index():
        
-        return render_template("index.html")
+        return jsonify (
+            {
+                'description':"LIVE - Italian Wine API for Udacity FNSD. See documentation for usage"
+            })
 
     
     
