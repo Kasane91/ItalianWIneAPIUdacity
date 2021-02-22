@@ -6,21 +6,22 @@ from jose import jwt
 from urllib.request import urlopen
 from dotenv import load_dotenv
 
-
-
 AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
 ALGORITHMS = ['RS256']
 API_AUDIENCE = os.environ.get('API_AUDIENCE')
 
-## AuthError Exception
+# AuthError Exception
 '''
 AuthError Exception
 A standardized way to communicate auth failure modes
 '''
+
+
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
         self.status_code = status_code
+
 
 def get_token_auth_header():
     if "Authorization" in request.headers: 
@@ -32,15 +33,12 @@ def get_token_auth_header():
                 return token
     else:
         raise AuthError({
-        'success': False,
-        'message': 'Not authorized',
-        'error': 401
-    }, 401)
-    
-   
-'''
+            'success': False,
+            'message': 'Not authorized',
+            'error': 401
+        }, 401)
 
-'''
+
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
         raise AuthError({
@@ -56,9 +54,15 @@ def check_permissions(permission, payload):
             'description': 'Unvalid permission'
         }, 401)
     return True
+
+
 '''
 Code for verify_decode_jwt provided by AuthO/Udacity course.
+!! urlopen has a common certificate error described here: Scraping: SSL: CERTIFICATE_VERIFY_FAILED error for http://en.wikipedia.org
+
 '''
+
+
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
@@ -113,10 +117,7 @@ def verify_decode_jwt(token):
                 'description': 'Unable to find the appropriate key.'
             }, 400)
 
-'''
 
-    
-'''
 def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)
