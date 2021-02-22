@@ -1,9 +1,22 @@
-import os, json
-from flask import Flask, request, abort, jsonify, render_template, url_for
+import os
+import json
+from flask import (
+    Flask, 
+    request, 
+    abort, jsonify, 
+    render_template, 
+    url_for)
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from models.models import setup_db, db_drop, create_all, Wine, District
-from auth.auth import AuthError, requires_auth 
+from models.models import (
+    setup_db, 
+    db_drop, 
+    create_all, 
+    Wine, 
+    District)
+from auth.auth import (
+    AuthError, 
+    requires_auth )
 from dotenv import load_dotenv
 
 '''
@@ -141,7 +154,9 @@ def create_app(test_config=None):
         try:
             wine = Wine(**wine_data)
             wine.insert()
-        except:
+        except Exception as e:
+            print(e)
+            db.session.rollback()
             return abort(422, "Incomplete body")
 
         return jsonify({
@@ -162,7 +177,9 @@ def create_app(test_config=None):
         try:
             district = District(**district_data)
             district.insert()
-        except:
+        except Exception as e:
+            print(e)
+            db.session.rollback()
             return abort(422, "Incomplete body")
 
         return jsonify({
@@ -179,8 +196,14 @@ def create_app(test_config=None):
         wine = Wine.query.get(wine_id)
         if not wine:
             return abort(404, f'Wine with id {wine_id} does not exist')
-        
-        wine.delete()
+        try:
+            wine.delete()
+
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+            return abort(500)
+
         return jsonify({
             'success': True,
             'deleted': wine.format()
@@ -197,7 +220,14 @@ def create_app(test_config=None):
         if not district:
             return abort(404, f'District with id {district_id} does not exist')
 
-        district.delete()
+        try: 
+            district.delete()
+
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+            return abort(500)
+
         return jsonify({
             'success': True,
             'deleted': district.format()
@@ -232,7 +262,13 @@ def create_app(test_config=None):
         district = body.get('district_id')
         wine.district_id = district if district else wine.district_id
 
-        wine.update()
+        try:
+            wine.update()
+
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+            return abort(422)
 
         return jsonify({
             'success': True,
@@ -255,8 +291,14 @@ def create_app(test_config=None):
 
         province = body.get('province')
         district.province = province if province else district.province
+        
+        try: 
+            district.update()
 
-        district.update()
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+            return abort(422)
 
         return jsonify({
             'success': True,
@@ -297,6 +339,14 @@ def create_app(test_config=None):
         "message": error.description
         }), 404
 
+    @app.errorhandler(500)
+    def internal_server_error(error):
+        return jsonify({
+        "success": False, 
+        "error": 500,
+        "message": error.description
+        }), 500
+
 
       
     @app.errorhandler(AuthError)
@@ -305,18 +355,7 @@ def create_app(test_config=None):
         response.status_code = exception.status_code
         return response
    
-
-
-
-
-
-
-
-
-
-
-
-
+   
     return app
 
 app = create_app()
