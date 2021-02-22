@@ -19,11 +19,6 @@ from auth.auth import (
     requires_auth)
 from dotenv import load_dotenv
 
-'''
-
-'''
-
-
 obj_per_page = 8
 
 
@@ -55,10 +50,12 @@ def create_app(test_config=None):
 
     @app.after_request
     def after_request(response):
-        response.headers.add
-        ('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS')
-        response.headers.add
-        ('Access-Control-Allow-Headers', 'Content-Type, Authorization, true')
+        response.headers.add(
+            'Access-Control-Allow-Methods',
+            'GET, POST, PATCH, DELETE, OPTIONS')
+        response.headers.add(
+            'Access-Control-Allow-Headers',
+            'Content-Type, Authorization, true')
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
@@ -147,7 +144,6 @@ def create_app(test_config=None):
             wine.insert()
         except Exception as e:
             print(e)
-            db.session.rollback()
             return abort(422, "Incomplete body")
 
         return jsonify({
@@ -169,7 +165,6 @@ def create_app(test_config=None):
             district.insert()
         except Exception as e:
             print(e)
-            db.session.rollback()
             return abort(422, "Incomplete body")
 
         return jsonify({
@@ -188,7 +183,6 @@ def create_app(test_config=None):
 
         except Exception as e:
             print(e)
-            db.session.rollback()
             return abort(500)
 
         return jsonify({
@@ -209,7 +203,6 @@ def create_app(test_config=None):
 
         except Exception as e:
             print(e)
-            db.session.rollback()
             return abort(500)
 
         return jsonify({
@@ -250,7 +243,6 @@ def create_app(test_config=None):
 
         except Exception as e:
             print(e)
-            db.session.rollback()
             return abort(422)
 
         return jsonify({
@@ -279,7 +271,6 @@ def create_app(test_config=None):
 
         except Exception as e:
             print(e)
-            db.session.rollback()
             return abort(422)
 
         return jsonify({
