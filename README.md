@@ -10,7 +10,11 @@ and is a passion project combining my wine interest and technology.
 
 They are sorted both by grape, producer and key area characteristics as well as a rating system.
 
+## MOTIVATION
 
+The project was developed as part of an assignment to finnish Udacity's Full Stack Developer Program.
+The idea was to both bolster my abilities to create API's and work with databases in my future job, 
+as well as an idea for a future tool for cataloging wine.
 
 ## Installing dependencies
 
@@ -27,7 +31,7 @@ It is recommended to work within a virtual environment whenever using Python for
 Once you have your virtual environment setup and running, install dependencies by running
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 This will install all of the required packages I have used within the `requirements.txt` file.
@@ -180,7 +184,7 @@ Requirements authorization: `get:wines`
 
 ### Example 
 
-curl https://italianwineapi.herokuapp.com/wines
+curl https://italianwineapi.herokuapp.com/wines -H "Authorization: Bearer {INSERT_TOKEN_HERE}"
 
 
 
@@ -285,7 +289,7 @@ Requires authorization: `get:wines`
 
 Example curl:
 ```
-curl https://italianwineapi.herokuapp.com/wines?page=2
+curl https://italianwineapi.herokuapp.com/wines?page=2 -H "Authorization: Bearer {INSERT_TOKEN_HERE}"
 
 ```
 #
@@ -390,7 +394,7 @@ Requires authorization: `get:wines`
 
 Example curl:
 ```
-curl https://italianwineapi.herokuapp.com/wines/1
+curl https://italianwineapi.herokuapp.com/wines/1 -H "Authorization: Bearer {INSERT_TOKEN_HERE}"
 
 ```
 
@@ -430,7 +434,7 @@ Requires authorization: `get:districts`
 
 Example curl:
 ```
-curl https://italianwineapi.herokuapp.com/districts
+curl https://italianwineapi.herokuapp.com/districts -H "Authorization: Bearer {INSERT_TOKEN_HERE}"
 
 ```
 
@@ -503,7 +507,7 @@ Requires authorization: `get:wines`
 
 Example curl:
 ```
-curl https://italianwineapi.herokuapp.com/districts/2
+curl https://italianwineapi.herokuapp.com/districts/2 -H "Authorization: Bearer {INSERT_TOKEN_HERE}"
 
 ```
 
@@ -611,7 +615,7 @@ Requires authorization: `post:wines`
 
 Example curl:
 ```
-curl https://italianwineapi.herokuapp.com/wines -X POST -H "Content-Type: application/json" 
+curl https://italianwineapi.herokuapp.com/wines -X POST -H "Content-Type: application/json" -H "Authorization: Bearer {INSERT_TOKEN_HERE}"
  -d '{
 	"producer": "Proddutori del Barbaresco",
 	"vintage": "2016",
@@ -659,7 +663,7 @@ Requires authorization: `post:districts`
 
 Example curl:
 ```
-curl https://italianwineapi.herokuapp.com/wines -X POST -H "Content-Type: application/json" 
+curl https://italianwineapi.herokuapp.com/wines -X POST -H "Content-Type: application/json" -H "Authorization: Bearer {INSERT_TOKEN_HERE}"
  -d '{
     "name": "Etna Rosso",
     "province": "Sicilia
@@ -700,7 +704,7 @@ Requires authorization: `delete:wines`
 
 Example curl:
 ```
-curl https://italianwineapi.herokuapp.com/wines/9 -X DELETE
+curl https://italianwineapi.herokuapp.com/wines/9 -X DELETE -H "Authorization: Bearer {INSERT_TOKEN_HERE}"
 
 ```
 
@@ -742,7 +746,7 @@ Requires authorization: `delete:disticts`
 
 Example curl:
 ```
-curl https://italianwineapi.herokuapp.com/districts/9
+curl https://italianwineapi.herokuapp.com/districts/9 -H "Authorization: Bearer {INSERT_TOKEN_HERE}"
 
 ```
 
@@ -780,7 +784,7 @@ Requires authorization: `patch:wines`
 
 Example curl:
 ```
-curl https://italianwineapi.herokuapp.com/wines/1 -X PATCH -H "Content-Type: application/json" 
+curl https://italianwineapi.herokuapp.com/wines/1 -X PATCH -H "Content-Type: application/json" -H "Authorization: Bearer {INSERT_TOKEN_HERE}"
  -d '{
 	"producer": "Proddutori del Barbaresco",
     "rating": "75",
@@ -825,7 +829,7 @@ Requires authorization: `patch:districts`
 
 Example curl:
 ```
-curl https://italianwineapi.herokuapp.com/districts/8 -X PATCH -H "Content-Type: application/json" 
+curl https://italianwineapi.herokuapp.com/districts/8 -X PATCH -H "Content-Type: application/json" -H "Authorization: Bearer {INSERT_TOKEN_HERE}"
  -d '{
 	"name": "Montalcino"
 
